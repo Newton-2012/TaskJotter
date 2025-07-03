@@ -102,7 +102,9 @@ def commands():
         elif cmd == ":d":
             erase_item()
         elif cmd == ":h":
+            line_break(45)
             print("Commands:\n:v - View all items in list\n:i - Enter new item\n:d - Delete item\n:h - Help Menu\n:q - Quit Program")
+            line_break(45)
         elif cmd == ":q":
             line_break(45)
             fake_loading("Closing Application", dots=12, delay=0.05, done_text="")
