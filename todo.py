@@ -1,4 +1,5 @@
 import time
+import os
 
 # ANSI Color Codes
 RED = "\033[31m"
@@ -8,13 +9,16 @@ BLUE = "\033[34m"
 MAGENTA = "\033[35m"
 RESET = "\033[0m"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TASKS_FILE = os.path.join(BASE_DIR, "tasks.txt")
+
 def line_break(n):
     print("-" * n)
 
 # Checks for Empty List
 def is_list_empty():
     try:
-        with open("tasks.txt", "r") as f:
+        with open(TASKS_FILE, "r") as f:
             lines = f.readlines()
             lines = [line for line in lines if line.strip()]
             return len(lines) == 0
@@ -45,7 +49,11 @@ def read_list():
 def new_item():
     line_break(45)
     item = input(MAGENTA + "Enter New Item: " + RESET)
-    with open("tasks.txt", "a") as f:
+    if not item:
+        print(RED + "Empty Value." + RESET)
+        line_break(45)
+        return
+    with open(TASKS_FILE, "a") as f:
         f.write(item + "\n")
         fake_loading("Uploading", dots=12, delay=0.1, done_text="Done!")
         print(GREEN + "Item Added." + RESET)
@@ -57,7 +65,7 @@ def erase_item():
     if is_list_empty():
         print(RED + "Empty List." + RESET)
         line_break(45)
-    with open("tasks.txt", "r") as f:
+    with open(TASKS_FILE, "r") as f:
         lines = f.readlines()
 
     for i, line in enumerate(lines, start=1):
@@ -70,7 +78,7 @@ def erase_item():
 
         if 0 <= index < len(lines):
             del lines[index]
-            with open("tasks.txt", "w") as f:
+            with open(TASKS_FILE, "w") as f:
                 f.writelines(lines)
             fake_loading("Editing", dots=12, delay=0.1, done_text="Done!")
             print(GREEN + f"Item successfully deleted at index {index + 1}." + RESET)
