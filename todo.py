@@ -77,6 +77,9 @@ def erase_item():
         index = int(input(MAGENTA + "Enter the line number to delete: " + RESET)) - 1
 
         if 0 <= index < len(lines):
+            if lines[index].strip() == "":
+                print(YELLOW + "Task already empty." + RESET)
+                return
             del lines[index]
             with open(TASKS_FILE, "w") as f:
                 f.writelines(lines)
