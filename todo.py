@@ -65,6 +65,7 @@ def erase_item():
     if is_list_empty():
         print(RED + "Empty List." + RESET)
         line_break(45)
+        return
     with open(TASKS_FILE, "r") as f:
         lines = f.readlines()
 
